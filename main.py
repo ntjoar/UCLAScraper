@@ -44,8 +44,8 @@ def startUp():
         data['settings'] = json.load(infile)['settings']
 
     if data['settings'][0]['disclaimerRead'] == False:
-        # Disclaimer agreement so that user knows we need acess
-        print("Disclaimer: this will create local folders to store data into. Please ensure the application has the necessary write privileges.\n---")
+        # Notice agreement so that user knows we need acess
+        print("Notice: this will create local folders to store data into. Please ensure the application has the necessary write privileges.\n---")
         inputData = ''
         
         # Agreement
