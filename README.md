@@ -6,8 +6,13 @@ Please run this with python3.
     python3 main.py
 
 ### Files and Folders
+    Class_Data/: A folder containing each class list of available courses in format of "COURSE_YEAR_QUARTER.json"
+    Results/: A folder containing final outputs of functions in classes.py
+    classes.py: a functional script for the scraping of the websites
+    main.py: The main file to run containing the user dashboard
+    pref.json: a JSON file containing the preferred settings in order to run the application
 
-### Disclaimer
+### Notice
 This program requires reading and writing privileges to the folders with in it's local directory. Please ensure the directory you are running in will have proper permissions
 
 ### Dependencies
