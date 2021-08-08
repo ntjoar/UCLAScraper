@@ -320,5 +320,4 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
     with open("./Results/" + "classes" + "_" +  year + "_" +  quarter + ".json", 'w') as outfile:
         json.dump(data, outfile, indent=1)
 
-    if verbose:
-        verify("./Results/" + "classes" + "_" +  year + "_" +  quarter + ".json")
+    verify("./Results/" + "classes" + "_" +  year + "_" +  quarter + ".json")
