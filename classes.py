@@ -18,6 +18,16 @@ def drive(headless):
         return webdriver.Chrome(options=chromeOpt, executable_path=binary_path)
     else:
         return webdriver.Chrome(executable_path=binary_path)
+
+def verify(filepath):
+    # JSON storage
+    data = {}
+    data['courses'] = []
+
+    with open(filepath, 'r') as infile:
+        data = json.load(infile)
+
+    print(len(data['courses']))
         
 # Script only gets the classes that we have available on the registrar site
 def getClasses(headless, verbose): 
@@ -277,6 +287,16 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
 
         driver.quit()
 
+        # Check if there is overlap with the previous data
+        if os.path.isfile('./Class_Data/' + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json'):
+            tempData = {}
+            tempData['courses'] = []
+            with open("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter + ".json", 'r') as infile:
+                tempData = json.load(infile)
+
+            if len(tempData['courses']) <= len(data['courses']):
+                continue
+
         # Write our data 
         with open("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json', 'w') as outfile:
             json.dump(data, outfile, indent=1)
@@ -299,3 +319,6 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
     # Write results
     with open("./Results/" + "classes" + "_" +  year + "_" +  quarter + ".json", 'w') as outfile:
         json.dump(data, outfile, indent=1)
+
+    if verbose:
+        verify("./Results/" + "classes" + "_" +  year + "_" +  quarter + ".json")

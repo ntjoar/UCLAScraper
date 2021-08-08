@@ -167,11 +167,13 @@ def menu():
         quarter = data['settings'][0]['quarter']
         year = data['settings'][0]['year']
         headless = data['settings'][0]['headless']
+        overwrite = data['settings'][0]['overwrite']
+        toClean = data['settings'][0]['cleanAfterRun']
         if data['settings'][0]['developer']:
             verbose = True
             headless = False
-        overwrite = data['settings'][0]['overwrite']
-        toClean = data['settings'][0]['cleanAfterRun']
+            overwrite = True
+            toClean = False
 
         print("Main menu\n-")
         print("1: Initialize\n2: Run\n3: Run all\n4: Clean\n5: Clean all\n6: Settings\n7: List Dependencies\n8: Help\n9: Quit\n-")
@@ -301,7 +303,7 @@ def settingsHelp():
     print("1: Verbose (Set verbose logging - on by default)")
     print("2: Quarter and Year (Set the quarter and year to scrape)")
     print("3: Headless mode (Set headless mode - off by default)")
-    print("4: Developer mode (Set all values to tell you the most verbose data, no data deletion happens)")
+    print("4: Developer mode (Set verbose flag, nonheadless running, no deletion of Class_Data, and overwrite flags)")
     print("5: Overwrite mode (Set if you want the script to overwrite your currently saved data)")
     print("6: Run Cleanly (Set if you want your script to run and clear the Class_Data folder afterwards - on by default)")
     print("7: Reset settings (Set all settings to default)")
