@@ -26,6 +26,8 @@ Selenium: https://pypi.org/project/selenium/
 
 Beautiful Soup: https://pypi.org/project/beautifulsoup4/
 
+Chrome driver: https://pypi.org/project/chromedriver-py/
+
 lxml: https://lxml.de/3.1/installation.html
 
 ### Options
