@@ -165,7 +165,11 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
 
         # Selenium hands the page source to Beautiful Soup
         classExists = BeautifulSoup(driver.page_source, 'lxml')
-        if not classExists.find('a', id=re.compile(r"^expandAll$")) and not overwrite:
+        if not classExists.find('a', id=re.compile(r"^expandAll$")):
+            # Skip if the data is alrea
+            if overwrite and os.path.isfile('./Class_Data/' + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json'):
+                continue
+
             # Write our data 
             with open("./Class_Data/"+ formattedAbbrev + "_" +  year + "_" +  quarter +  '.json', 'w') as outfile:
                 json.dump(data, outfile, indent=1)
