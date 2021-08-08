@@ -27,7 +27,7 @@ def verify(filepath):
     with open(filepath, 'r') as infile:
         data = json.load(infile)
 
-    print(len(data['courses']))
+    print("Total length of all classes: " + str(len(data['courses'])))
         
 # Script only gets the classes that we have available on the registrar site
 def getClasses(headless, verbose): 
