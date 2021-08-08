@@ -1,6 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
+from chromedriver_py import binary_path
 import re
 import time
 import json
@@ -14,9 +15,9 @@ def drive(headless):
     chromeOpt.add_argument('--disable-gpu')
 
     if headless:
-        return webdriver.Chrome(options=chromeOpt)
+        return webdriver.Chrome(options=chromeOpt, executable_path=binary_path)
     else:
-        return webdriver.Chrome()
+        return webdriver.Chrome(executable_path=binary_path)
         
 # Script only gets the classes that we have available on the registrar site
 def getClasses(headless, verbose): 
@@ -150,7 +151,7 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
         driver = drive(headless)
         driver.implicitly_wait(30)
         driver.get(url)
-        time.sleep(2)
+        time.sleep(3)
 
         # Selenium hands the page source to Beautiful Soup
         classExists = BeautifulSoup(driver.page_source, 'lxml')
@@ -186,7 +187,7 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
             shadow_root = driver.execute_script('return arguments[0].shadowRoot', element)
             python_button = shadow_root.find_element_by_id('expandAll')
             python_button.click()
-            time.sleep(3)
+            time.sleep(5)
 
             # Selenium hands the page source to Beautiful Soup
             driver.switch_to.window(driver.window_handles[0])
