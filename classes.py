@@ -166,8 +166,13 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
         # Selenium hands the page source to Beautiful Soup
         classExists = BeautifulSoup(driver.page_source, 'lxml')
         if not classExists.find('a', id=re.compile(r"^expandAll$")):
-            # Skip if the data is alrea
+            # Skip if the data is alreay exists
+            print("Length of current file: " + str(len(tempData['courses'])))
+            print("Length of read data: 0")
+            print("Difference: " + str(0 - len(tempData['courses'])))
+
             if overwrite and os.path.isfile('./Class_Data/' + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json'):
+                print("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter + ".json not overwritten due to less data read\n---")
                 continue
 
             # Write our data 
@@ -235,7 +240,6 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
                                 print("year: " + year)
                                 print("---")
 
-
                             # Add data to json array
                             data['courses'].append({
                                 'courseID' : courseID,
@@ -292,15 +296,22 @@ def getSchedule(year, quarter, verbose, headless, overwrite):
         driver.quit()
 
         # Check if there is overlap with the previous data
-        if os.path.isfile('./Class_Data/' + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json'):
+        if os.path.isfile('./Class_Data/' + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json') and overwrite:
             tempData = {}
             tempData['courses'] = []
             with open("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter + ".json", 'r') as infile:
                 tempData = json.load(infile)
 
-            if len(tempData['courses']) <= len(data['courses']):
-                continue
+            print("Length of current file: " + str(len(tempData['courses'])))
+            print("Length of read data: " + str(len(data['courses'])))
+            print("Difference: " + str(len(data['courses']) - len(tempData['courses'])))
 
+            if len(tempData['courses']) >= len(data['courses']):
+                print("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter + ".json not overwritten due to less or equal data read\n---")
+                continue
+        
+        if overwrite:
+            print("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter + ".json overwritten due to more data read\n---")
         # Write our data 
         with open("./Class_Data/" + formattedAbbrev + "_" +  year + "_" +  quarter +  '.json', 'w') as outfile:
             json.dump(data, outfile, indent=1)
